@@ -1,0 +1,30 @@
+{
+  "name": "awssopilot",
+  "version": "1.0.0",
+  "description": "Automates AWS SSO token renewal and generates IAM credentials, supporting multi-profile management",
+  "type": "module",
+  "exports": "./awssopilot.js",
+  "bin": {
+    "awssopilot": "awssopilot.js"
+  },
+  "scripts": {
+    "start": "node awssopilot.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "name": "awssopilot",
+    "type": "git",
+    "url": "git+https://github.com/un0tec/awssopilot.git"
+  },
+  "author": "un0tec",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/un0tec/awssopilot/issues"
+  },
+  "homepage": "https://github.com/un0tec/awssopilot#readme",
+  "dependencies": {
+    "execa": "9.5.1",
+    "puppeteer": "23.9.0",
+    "axios": "1.7.8"
+  }
+}
