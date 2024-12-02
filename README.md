@@ -91,7 +91,7 @@ Setting profile: profile1
     Executing YAWSSO...
 -----------------------------------------
     SSO profile 'profile1' token renewed
-    IAM profile 'profile-iam' configured
+    IAM profile 'profile1-iam' configured
 -----------------------------------------
 ```
 
