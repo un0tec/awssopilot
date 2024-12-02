@@ -5,8 +5,8 @@
 
 1. :notebook_with_decorative_cover: [Description](#-description)
 2. :warning: [Before running](#-before-running)
-3. :writing_hand: [Syntax](#-syntax)
-4. :hammer: [Usage](#-usage)
+3. :hammer: [Installation](#-installation)
+4. :writing_hand: [Usage](#-usage)
 5. :bookmark_tabs: [Options](#-options)
 6. :monocle_face: [Examples](#-examples)
 7. :page_with_curl: [License](#-license)
@@ -28,17 +28,15 @@ Ensure that your AWS SSO profiles are configured using `aws sso configure` and y
 
 The `awssopilot.config` file should be placed in the user's home directory (Linux `~/awssopilot.config`, Windows `%userprofile%/awssopilot.config`).
 
-## # Syntax
+## # Installation
 
-The general syntax for using `awssopilot` is:
-
-    awssopilot [OPTIONS]
+`npm i -g awssopilot`
 
 ## # Usage
 
 Basic usage example:
 
-    awssopilot
+    awssopilot [OPTIONS]
 
 This will automatically attempt to log into all profiles specified in the `awssopilot.config` file.
 
