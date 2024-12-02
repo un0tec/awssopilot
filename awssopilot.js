@@ -2,7 +2,7 @@ import puppeteer from 'puppeteer';
 import { readFileSync } from 'fs';
 import { setTimeout } from 'timers/promises';
 import { execa } from 'execa';
-import os from 'os'
+import os from 'os';
 import pkg from './package.json' with {type: 'json'};
 import { checkUpdate } from './update-notifier.js';
 
@@ -115,10 +115,10 @@ async function init() {
 
             // yawsso
             console.log('    Executing YAWSSO...');
-            await execa`yawsso -p ${profile}:${profile}-cred`;
+            await execa`yawsso -p ${profile}:${profile}-iam`;
 
             // logs
-            const logMessage = `    IAM profile '${profile}-cred' configured `;
+            const logMessage = `    IAM profile '${profile}-iam' configured `;
             console.log('-'.repeat(logMessage.length));
             console.log(`    SSO profile '${profile}' token renewed`);
             console.log(logMessage);
