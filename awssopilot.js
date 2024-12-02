@@ -1,3 +1,4 @@
+#!/usr/bin/env node
 import puppeteer from 'puppeteer';
 import { readFileSync } from 'fs';
 import { setTimeout } from 'timers/promises';
