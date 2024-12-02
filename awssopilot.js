@@ -1,4 +1,4 @@
-#!/usr/bin/env node
+#!/usr/bin/env node --no-warnings=ExperimentalWarning
 import puppeteer from 'puppeteer';
 import { readFileSync } from 'fs';
 import { setTimeout } from 'timers/promises';
