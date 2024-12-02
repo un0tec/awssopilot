@@ -14,7 +14,7 @@
 
 ## # Description
 
-`awssopilot` is a command-line tool that automates AWS SSO login for multiple profiles. It supports various login methods such as email/password, phone call, or app-based verification. Additionally, it integrates with [yawsso](https://github.com/victorskl/yawsso) to configure IAM roles once the login process is completed.
+`awssopilot` is a command-line tool that automates AWS SSO login for multiple profiles. It supports various login methods such as email/password, phone call, or app-based verification. Additionally, it integrates with [yawsso](https://github.com/victorskl/yawsso) to configure IAM credentials once the login process is completed.
 
 ## # Before Running
 
@@ -48,7 +48,54 @@ N/A
 
 ## # Examples
 
-N/A
+Linux: `~/awssopilot-config`\
+Windows: `%userprofile%/awssopilot-config`
+
+```
+{
+    "profiles": [
+		"profile1",
+		"profile2",
+		"profile3"
+    ],
+    "email": "email@example.com",
+    "password": "password",
+    "type": "call",
+    "phone": "last_two_phone_digits"
+}
+```
+**App output:**
+```
+Setting profile: profile1
+    Loading url: https://device.sso.eu-west-1.amazonaws.com/?user_code=XXXX-XXX
+    Approving code...
+    Logging user...
+    Loading app code...
+    Awaiting approval of code: 59
+    Approving access...
+    Awaiting graceful time...
+    Executing YAWSSO...
+------------------------------------------
+    SSO profile 'profile1' token renewed
+    IAM profile 'profile1-iam' configured
+------------------------------------------
+```
+**Call output:**
+```
+Setting profile: profile1
+    Loading url: https://device.sso.eu-west-1.amazonaws.com/?user_code=XXXX-XXX
+    Approving code...
+    Logging user...
+    Logging with phone call...
+    Awaiting approval call...
+    Approving access...
+    Awaiting graceful time...
+    Executing YAWSSO...
+-----------------------------------------
+    SSO profile 'profile1' token renewed
+    IAM profile 'profile-iam' configured
+-----------------------------------------
+```
 
 ## # License
 
