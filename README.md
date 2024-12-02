@@ -1,7 +1,7 @@
 # awssopilot
 
-[![License: MIT](https://img.shields.io/github/license/username/awssopilot?color=orange&cache=none)](LICENSE)
-[![Release](https://img.shields.io/github/v/release/username/awssopilot?color=green&label=Release)](https://github.com/username/awssopilot/releases/latest)
+[![License: MIT](https://img.shields.io/github/license/un0tec/awssopilot?color=orange&cache=none)](LICENSE)
+[![Release](https://img.shields.io/github/v/release/un0tec/awssopilot?color=green&label=Release)](https://github.com/un0tec/awssopilot/releases/latest)
 
 1. :notebook_with_decorative_cover: [Description](#-description)
 2. :warning: [Before running](#-before-running)
