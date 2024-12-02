@@ -14,7 +14,7 @@
 
 ## # Description
 
-`awssopilot` is a command-line tool that automates AWS SSO login for multiple profiles. It supports various login methods such as email/password, phone call, or app-based verification. Additionally, it integrates with [yawsso](https://github.com/victorskl/yawsso) to configure IAM roles once the login process is completed.
+`awssopilot` is a command-line tool that automates AWS SSO login for multiple profiles. It supports various login methods such as email/password, phone call, or app-based verification. Additionally, it integrates with [yawsso](https://github.com/victorskl/yawsso) to configure IAM credentials once the login process is completed.
 
 ## # Before Running
 
