@@ -26,7 +26,10 @@ Ensure that your AWS SSO profiles are configured using `aws sso configure` and y
 - `phone`: Last two digits of the phone number for phone call-based authentication.
 - `type`: The authentication type (`call` for phone call or `app` for app-based verification).
 
-The `awssopilot.config` file should be placed in the user's home directory (Linux `~/awssopilot.config`, Windows `%userprofile%/awssopilot.config`).
+The `awssopilot.config` file should be placed as follows:
+
+- **Linux/macOS:** ~/awssopilot.config
+- **Windows:** %userprofile%\awssopilot.config
 
 ## # Installation
 
@@ -46,8 +49,8 @@ N/A
 
 ## # Examples
 
-Linux: `~/awssopilot-config`\
-Windows: `%userprofile%/awssopilot-config`
+Linux: `~/awssopilot.config`\
+Windows: `%userprofile%/awssopilot.config`
 
 ```
 {
