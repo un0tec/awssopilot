@@ -24,7 +24,7 @@
   "homepage": "https://github.com/un0tec/awssopilot#readme",
   "dependencies": {
     "execa": "9.5.2",
-    "puppeteer": "23.10.1",
+    "puppeteer": "23.11.1",
     "axios": "1.7.9"
   }
 }
