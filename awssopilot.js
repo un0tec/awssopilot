@@ -53,11 +53,6 @@ async function init() {
             console.log(`    Loading url: ${url}`);
             await page.goto(url);
 
-            // confirm code
-            console.log('    Approving code...');
-            await page.waitForSelector('#cli_verification_btn');
-            await page.click('#cli_verification_btn');
-
             // user
             console.log('    Logging user...');
             await page.waitForSelector('input[type="email"]');
@@ -99,6 +94,11 @@ async function init() {
             // allow cookies
             await page.waitForSelector('button[aria-label="Accept all cookies"]');
             await page.click('button[aria-label="Accept all cookies"]');
+
+            // confirm code
+            console.log('    Approving code...');
+            await page.waitForSelector('#cli_verification_btn');
+            await page.click('#cli_verification_btn');
 
             // allow access
             console.log('    Approving access...');

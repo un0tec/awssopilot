@@ -1,4 +1,5 @@
 import axios from 'axios';
+import semverLt from 'semver/functions/lt.js'
 
 async function fetchLatestRelease(pkg) {
     const url = `https://api.github.com/repos/${pkg.author}/${pkg.repository}/releases/latest`;
@@ -18,7 +19,7 @@ function logUpdate(pkg, latestVersion) {
 
 export async function checkUpdate(pkg) {
     const latestVersion = await fetchLatestRelease(pkg);
-    if (latestVersion && pkg.version !== latestVersion) {
+    if (latestVersion && semverLt(pkg.version, latestVersion)) {
         logUpdate(pkg, latestVersion);
         return true;
     }
