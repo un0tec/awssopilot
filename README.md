@@ -39,13 +39,19 @@ The `awssopilot.config` file should be placed as follows:
 
 Basic usage example:
 
-    awssopilot [OPTIONS]
+    awssopilot [profile] [profile]...
 
 This will automatically attempt to log into all profiles specified in the `awssopilot.config` file.
 
 ## # Options
 
-N/A
+The following command-line options are supported:
+
+| Option | Description | Type | Required  | Default value |
+|-----------------|---------------------------------------------------------------|---------------|------------|----------------|
+| `--skip-update` | Skip checking for updates | boolean | No | false |
+| `-v`, `--version` | Show version number | boolean | No | - |
+| `-h`, `--help` | Display help information | boolean | No | - |
 
 ## # Examples
 
