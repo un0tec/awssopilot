@@ -25,3 +25,7 @@ export async function checkUpdate(pkg) {
     }
     return false;
 }
+
+export async function checkUpdateExit(pkg) {
+    if (await checkUpdate(pkg)) process.exit();
+}

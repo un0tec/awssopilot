@@ -5,16 +5,22 @@ import { setTimeout } from 'timers/promises';
 import { execa } from 'execa';
 import os from 'os';
 import pkg from './package.json' with {type: 'json'};
-import { checkUpdate } from './update-notifier.js';
+import { checkUpdateExit } from './update-notifier.js';
+import yargs from 'yargs';
+import { hideBin } from 'yargs/helpers';
 
-const updateAvailable = await checkUpdate({
-    author: pkg.author,
-    repository: pkg.repository.name,
-    name: pkg.name,
-    version: pkg.version
-})
+const CONFIG_PATH = `${os.homedir()}/awssopilot.config`;
 
-if (updateAvailable) { process.exit(); }
+const argv = yargs(hideBin(process.argv)).exitProcess(false).help(false).parse();
+
+if (argv.skipUpdate !== true) {
+    await checkUpdateExit({
+        author: pkg.author,
+        repository: pkg.repository.name,
+        name: pkg.name,
+        version: pkg.version
+    })
+}
 
 init().catch((error) => {
     console.error(error.message);
@@ -23,9 +29,13 @@ init().catch((error) => {
 
 async function init() {
 
+    const args = getYargs();
+
     // config
-    const data = readFileSync(os.homedir() + "/awssopilot.config", "utf8");
+    const data = readFileSync(CONFIG_PATH, "utf8");
     const config = JSON.parse(data);
+
+    const profiles = getProfiles(args._, config.profiles);
 
     // check aws installed
     await execa`aws --version`;
@@ -33,7 +43,7 @@ async function init() {
     // check yawsso installed
     await execa`yawsso --version`;
 
-    for (const profile of config.profiles) {
+    for (const profile of profiles) {
 
         console.log(`Setting profile: ${profile}`);
 
@@ -128,4 +138,38 @@ async function init() {
         }
     }
 
+}
+
+function getProfiles(argv, profiles) {
+    const invalidProfiles = argv.filter(profile => !profiles.includes(profile));
+    if (invalidProfiles.length > 0) {
+        throw new Error(`Invalid profiles: '${invalidProfiles.join(", ")}' not found in ${CONFIG_PATH}`);
+    }
+    return argv.length > 0
+        ? profiles.filter(profile => argv.includes(profile))
+        : profiles;
+}
+
+function getYargs() {
+    const yarg = yargs(hideBin(process.argv));
+    return yarg.scriptName(pkg.name).usage('Usage: $0 [profile] [profile] ...')
+        .option('skip-update', {
+            description: 'Skip checking for updates',
+            type: 'boolean',
+            default: false
+        })
+        .strictOptions()
+        .version(pkg.version).alias('version', 'v')
+        .showHelpOnFail(false, 'Specify --help for available options')
+        .help().alias('help', 'h')
+        .parserConfiguration({
+            'short-option-groups': false
+        })
+        .fail(error => {
+            console.error(error);
+            console.error();
+            yarg.showHelp();
+            process.exit(1);
+        })
+        .argv;
 }
