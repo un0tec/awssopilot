@@ -98,10 +98,12 @@ async function init() {
             }
 
             // submit stay logged
+            console.log('    Submit stay logged...');
             await page.waitForSelector('#KmsiDescription', { delay: 60 });
             await page.click('input[type="submit"]');
 
             // allow cookies
+            console.log('    Accept cookies...');
             await page.waitForSelector('button[aria-label="Accept all cookies"]');
             await page.click('button[aria-label="Accept all cookies"]');
 
