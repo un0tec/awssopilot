@@ -104,7 +104,7 @@ async function init() {
 
             // allow cookies
             console.log('    Accept cookies...');
-            await page.waitForSelector('button[aria-label="Accept all cookies"]');
+            await page.waitForSelector('button[aria-label="Accept all cookies"]', { visible: true });
             await page.click('button[aria-label="Accept all cookies"]');
 
             // confirm code
