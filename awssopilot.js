@@ -65,12 +65,12 @@ async function init() {
 
             // user
             console.log('    Logging user...');
-            await page.waitForSelector('input[type="email"]');
+            await page.waitForSelector('input[type="email"]', { visible: true });
             await page.type('input[type="email"]', config.email);
             await page.click('input[type="submit"]');
 
             // password
-            await page.waitForSelector('input[type="password"]');
+            await page.waitForSelector('input[type="password"]', { visible: true });
             await setTimeout(1000);
             await page.type('input[type="password"]', config.password);
             await page.click('input[type="submit"]');

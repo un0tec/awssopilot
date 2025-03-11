@@ -1,6 +1,6 @@
 {
   "name": "awssopilot",
-  "version": "1.2.1",
+  "version": "1.2.2",
   "description": "Automates AWS SSO token renewal and generates IAM credentials, supporting multi-profile management",
   "type": "module",
   "exports": "./awssopilot.js",
