@@ -98,7 +98,6 @@ async function init() {
             }
 
             // submit stay logged
-            console.log('    Submit stay logged...');
             await page.waitForSelector('#KmsiDescription', { delay: 60 });
             await page.click('input[type="submit"]');
 
