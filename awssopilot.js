@@ -117,6 +117,10 @@ async function init() {
             await page.locator(`span ::-p-text("Allow access")`).click();
             await page.locator(`div ::-p-text("Request approved")`).wait();
 
+            // wait to close browser
+            console.log('    Awaiting to close browser...');
+            await setTimeout(2000);
+
             // close browser
             await browser.close();
 
