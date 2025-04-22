@@ -50,7 +50,7 @@ async function init() {
         const execaProcess = execa({ reject: false })`aws sso login --profile ${profile} --no-browser`;
 
         for await (const line of execaProcess) {
-            if (!line.includes('?user_code')) {
+            if (!line.startsWith('https://')) {
                 continue;
             }
             const url = line;
@@ -107,9 +107,9 @@ async function init() {
             await page.click('button[aria-label="Accept all cookies"]');
 
             // confirm code
-            console.log('    Approving code...');
-            await page.waitForSelector('#cli_verification_btn');
-            await page.click('#cli_verification_btn');
+            // console.log('    Approving code...');
+            // await page.waitForSelector('#cli_verification_btn');
+            // await page.click('#cli_verification_btn');
 
             // allow access
             console.log('    Approving access...');
