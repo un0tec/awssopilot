@@ -111,11 +111,22 @@ async function init() {
             // await page.waitForSelector('#cli_verification_btn');
             // await page.click('#cli_verification_btn');
 
+            // check if user already approved
+            let approved;
+            try {
+                await page.locator(`h4 ::-p-text("Request approved")`).wait({ timeout: 5000 });
+                approved = true;
+            } catch (error) {
+                approved = false;
+            }
+
             // allow access
-            console.log('    Approving access...');
-            await page.locator(`span ::-p-text("Allow access")`).wait();
-            await page.locator(`span ::-p-text("Allow access")`).click();
-            await page.locator(`div ::-p-text("Request approved")`).wait();
+            if (!approved) {
+                console.log('    Approving access...');
+                await page.locator(`span ::-p-text("Allow access")`).wait();
+                await page.locator(`span ::-p-text("Allow access")`).click();
+                await page.locator(`div ::-p-text("Request approved")`).wait();
+            }
 
             // wait to close browser
             console.log('    Awaiting to close browser...');
