@@ -79,10 +79,15 @@ async function init() {
             if (config.type === 'call') {
                 // login with call
                 console.log('    Logging with phone call...');
-                await page.waitForSelector('#signInAnotherWay');
-                await page.click('#signInAnotherWay');
+                try {
+                    await page.waitForSelector('#signInAnotherWay', { timeout: 5000 });
+                    await page.click('#signInAnotherWay');
+                } catch (error) {
+                    // no need signInAnotherWay, already in another way
+                }
 
                 // select phone
+                console.log('    Selecting phone...');
                 await page.waitForSelector('#idDiv_SAOTCS_Title');
                 await page.locator(`div ::-p-text("Call +XX XXXXXXX${config.phone}")`).click();
                 console.log('    Awaiting approval call...');
