@@ -56,7 +56,7 @@ async function init() {
             const url = line;
 
             // browser
-            const browser = await puppeteer.launch({ headless: true, args: ['--lang=en'] });
+            const browser = await puppeteer.launch({ headless: false, args: ['--lang=en'] });
             const page = (await browser.pages())[0];
 
             // load page
@@ -106,10 +106,21 @@ async function init() {
             await page.waitForSelector('#KmsiDescription', { delay: 60 });
             await page.click('input[type="submit"]');
 
-            // allow cookies
-            console.log('    Accept cookies...');
-            await page.waitForSelector('button[aria-label="Accept all cookies"]', { visible: true });
-            await page.click('button[aria-label="Accept all cookies"]');
+            // check if user already approved
+            let approved;
+            try {
+                await page.locator(`h4 ::-p-text("Request approved")`).wait({ timeout: 5000 });
+                approved = true;
+            } catch (error) {
+                approved = false;
+            }
+
+            if (!approved) {
+                // allow cookies
+                console.log('    Accept cookies...');
+                await page.waitForSelector('button[aria-label="Accept all cookies"]', { visible: true });
+                await page.click('button[aria-label="Accept all cookies"]');
+            }
 
             // confirm code
             // console.log('    Approving code...');
@@ -117,7 +128,6 @@ async function init() {
             // await page.click('#cli_verification_btn');
 
             // check if user already approved
-            let approved;
             try {
                 await page.locator(`h4 ::-p-text("Request approved")`).wait({ timeout: 5000 });
                 approved = true;
