@@ -56,7 +56,7 @@ async function init() {
             const url = line;
 
             // browser
-            const browser = await puppeteer.launch({ headless: false, args: ['--lang=en'] });
+            const browser = await puppeteer.launch({ headless: true, args: ['--lang=en'] });
             const page = (await browser.pages())[0];
 
             // load page
