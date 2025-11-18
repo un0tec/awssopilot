@@ -170,12 +170,15 @@ async function init() {
             }
 
             // logs
-            const logMessage = `    IAM profile '${profile}-iam' configured `;
-            console.log('-'.repeat(logMessage.length));
-            console.log(`    SSO profile '${profile}' token renewed`);
-            console.log(logMessage);
-            console.log('-'.repeat(logMessage.length));
-            break;
+            const baseLine = `    SSO profile '${profile}' token renewed`;
+            const iamLineRan = `    IAM profile '${profile}-iam' configured`;
+            const iamLineSkip = `    IAM profile '${profile}-iam' not synced (YAWSSO skipped)`;
+            const dash = '-'.repeat(Math.max(baseLine.length, iamLineRan.length, iamLineSkip.length));
+
+            console.log(dash);
+            console.log(baseLine);
+            console.log(skipYawsso ? iamLineSkip : iamLineRan);
+            console.log(dash);
         }
     }
 
