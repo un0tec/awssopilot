@@ -45,8 +45,6 @@ async function init() {
     // check yawsso installed
     if (!skipYawsso) {
         await execa`yawsso --version`;
-    } else {
-        console.log('Skipping YAWSSO presence check (per skip flag/config)');
     }
 
     for (const profile of profiles) {
