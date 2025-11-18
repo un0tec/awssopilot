@@ -37,11 +37,17 @@ async function init() {
 
     const profiles = getProfiles(args._, config.profiles);
 
+    const skipYawsso = args.skipYawsso || config.skipYawsso === true;
+
     // check aws installed
     await execa`aws --version`;
 
     // check yawsso installed
-    await execa`yawsso --version`;
+    if (!skipYawsso) {
+        await execa`yawsso --version`;
+    } else {
+        console.log('Skipping YAWSSO presence check (per skip flag/config)');
+    }
 
     for (const profile of profiles) {
 
@@ -156,8 +162,12 @@ async function init() {
             execaProcess.kill();
 
             // yawsso
-            console.log('    Executing YAWSSO...');
-            await execa`yawsso -p ${profile}:${profile}-iam`;
+            if (!skipYawsso) {
+                console.log('    Executing YAWSSO...');
+                await execa`yawsso -p ${profile}:${profile}-iam`;
+            } else {
+                console.log('    Skipping YAWSSO presence check (per skip flag/config)');
+            }
 
             // logs
             const logMessage = `    IAM profile '${profile}-iam' configured `;
@@ -186,6 +196,11 @@ function getYargs() {
     return yarg.scriptName(pkg.name).usage('Usage: $0 [profile] [profile] ...')
         .option('skip-update', {
             description: 'Skip checking for updates',
+            type: 'boolean',
+            default: false
+        })
+        .option('skip-yawsso', {
+            description: 'Skip executing YAWSSO sync',
             type: 'boolean',
             default: false
         })
