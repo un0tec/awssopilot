@@ -69,30 +69,27 @@ async function init() {
 
             // user
             console.log('    Logging user...');
-            await page.waitForSelector('input[type="email"]', { visible: true });
-            await page.type('input[type="email"]', config.email);
-            await page.click('input[type="submit"]');
+            await page.locator('input[type="email"]').fill(config.email);
+            await page.locator('input[type="submit"]').click();
 
             // password
-            await page.waitForSelector('input[type="password"]', { visible: true });
             await setTimeout(1000);
-            await page.type('input[type="password"]', config.password);
-            await page.click('input[type="submit"]');
+            await page.locator('input[type="password"]').fill(config.password);
+            await page.locator('input[type="submit"]').click();
 
             // call
             if (config.type === 'call') {
                 // login with call
                 console.log('    Logging with phone call...');
                 try {
-                    await page.waitForSelector('#signInAnotherWay', { timeout: 5000 });
-                    await page.click('#signInAnotherWay');
+                    await page.locator('#signInAnotherWay').click({ timeout: 5000 });
                 } catch (error) {
                     // no need signInAnotherWay, already in another way
                 }
 
                 // select phone
                 console.log('    Selecting phone...');
-                await page.waitForSelector('#idDiv_SAOTCS_Title');
+                await page.locator('#idDiv_SAOTCS_Title').wait();
                 await page.locator(`div ::-p-text("Call +XX XXXXXXX${config.phone}")`).click();
                 console.log('    Awaiting approval call...');
             }
@@ -107,8 +104,8 @@ async function init() {
             }
 
             // submit stay logged
-            await page.waitForSelector('#KmsiDescription', { delay: 60 });
-            await page.click('input[type="submit"]');
+            await page.locator('#KmsiDescription').wait();
+            await page.locator('input[type="submit"]').click();
 
             // check if user already approved
             let approved;
@@ -122,14 +119,12 @@ async function init() {
             if (!approved) {
                 // allow cookies
                 console.log('    Accept cookies...');
-                await page.waitForSelector('button[aria-label="Accept all cookies"]', { visible: true });
-                await page.click('button[aria-label="Accept all cookies"]');
+                await page.locator('button[aria-label="Accept all cookies"]').click();
             }
 
             // confirm code
             // console.log('    Approving code...');
-            // await page.waitForSelector('#cli_verification_btn');
-            // await page.click('#cli_verification_btn');
+            // await page.locator('#cli_verification_btn').click();
 
             // check if user already approved
             try {
