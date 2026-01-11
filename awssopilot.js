@@ -60,7 +60,7 @@ async function init() {
             const url = line;
 
             // browser
-            const browser = await puppeteer.launch({ headless: true, args: ['--lang=en'] });
+            const browser = await puppeteer.launch({ headless: false, args: ['--lang=en'] });
             const page = (await browser.pages())[0];
 
             // load page
@@ -108,30 +108,29 @@ async function init() {
             await page.locator('input[type="submit"]').click();
 
             // check if user already approved
-            let approved;
-            try {
-                await page.locator(`h4 ::-p-text("Request approved")`).wait({ timeout: 5000 });
-                approved = true;
-            } catch (error) {
-                approved = false;
-            }
+            const outcome = await Promise.race([
+                page.locator(`h4 ::-p-text("Request approved")`).wait().then(() => 'APPROVED'),
+                page.locator(`div ::-p-text("
+                    Your credentials have been shared successfully and can be used until your session expires. You can
+                    now close this tab.
+                ")`).wait().then(() => 'APPROVED'),
+                page.locator('button[aria-label="Accept all cookies"]').wait().then(() => 'COOKIES')
+            ]);
 
-            if (!approved) {
-                // allow cookies
+            let approved = false;
+
+            if (outcome === 'APPROVED') approved = true;
+
+            if (outcome === 'COOKIES') {
                 console.log('    Accept cookies...');
                 await page.locator('button[aria-label="Accept all cookies"]').click();
-            }
 
-            // confirm code
-            // console.log('    Approving code...');
-            // await page.locator('#cli_verification_btn').click();
-
-            // check if user already approved
-            try {
-                await page.locator(`h4 ::-p-text("Request approved")`).wait({ timeout: 5000 });
-                approved = true;
-            } catch (error) {
-                approved = false;
+                // check if user already approved
+                try {
+                    await page.locator(`h4 ::-p-text("Request approved")`).wait({ timeout: 5000 });
+                    approved = true;
+                } catch (error) { // NOSONAR
+                }
             }
 
             // allow access
